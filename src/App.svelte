@@ -2,6 +2,19 @@
   import svelteLogo from './assets/svelte.svg'
   import viteLogo from '/vite.svg'
   import Counter from './lib/Counter.svelte'
+
+  let firstName = 'Julius';
+  let lastName ='Leonardo';
+  let color = 'blue';
+  let showText = false;
+
+  //Reactive Value;
+  $: name = firstName + ' ' + lastName;
+
+  const toggle = () => {
+    color = color === 'blue' ? 'red' : 'blue';
+    showText = !showText;
+  }
 </script>
 
 <main>
@@ -13,19 +26,24 @@
       <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
     </a>
   </div>
-  <h1>Vite + Svelte</h1>
+  <h1 style="color: {color};">{name}</h1>
 
-  <div class="card">
-    <Counter />
-  </div>
+  {#if showText}
+  
+    <div class="card">
+      <Counter />
+    </div>
+    <p>
+      Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
+    </p>
+    <p class="read-the-docs">
+      Click on the Vite and Svelte logos to learn more
+    </p>
+  {:else}
+    <p>No Text</p>
+  {/if}
 
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
+  <button on:click={toggle}>Click</button>
 </main>
 
 <style>
