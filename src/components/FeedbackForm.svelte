@@ -8,34 +8,38 @@
   const dispatch = createEventDispatcher()
   let text = ''
   let btnDisabled = true
-  let min = 10
+  let min = 1
   let message 
   let rating = 10
 
-  const handleInput = () => {
-    if(text.trim().length <=min){
-        message = `Text must be at least ${min} characters`
-        btnDisabled = true
-    }else {
-        message = null
-        btnDisabled = false
+
+  function handleInput(event) {
+    text = event.target.value;
+
+    if (text.trim().length < min) {
+      message = `Text must be at least ${min} characters`;
+      btnDisabled = true;
+    } else {
+      message = null;
+      btnDisabled = false;
     }
   }
 
   const handleSelect = e => rating = e.detail
 
-  const handleSubmit = () => {
-    if(text.trim().length > min){
-
+  function handleSubmit() {
+    if (text.trim().length >= min) {
       const newFeedback = {
         id: uuidv4(),
         text,
-        rating: + rating
-      }
+        rating: +rating
+      };
 
-      dispatch('add-feedback',newFeedback)
+       dispatch('add-feedback', newFeedback);
 
-      text = null
+       text = ''; // reset the input
+       btnDisabled = true;
+      
     }
   }
 </script>
